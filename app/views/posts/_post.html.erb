@@ -1,0 +1,26 @@
+
+  <p>
+    <b><%= link_to post.title, post_path(post)%></b>
+  </p>
+  <p>
+    <% if post.lang == 'None' %>
+      <pre><code class="nohighlight"><%= post.text %></code></pre>
+    <% elsif post.lang == 'Other'%>
+      <pre><code><%= post.text %></code></pre>
+    <%else%>
+      <pre><code class="<%= post.lang.downcase%>"><%= post.text %></code></pre>
+    <%end%>
+  </p>
+  <p>
+    Author:
+    <% if post.user_id == 0  %>
+      Anon |
+    <% else %>
+      <%= link_to post.user.username, profile_path(post.user_id)%> |
+    <% end %>
+    Language: <%= post.lang %> |
+    <%= post.created_at.strftime("%Y-%m-%d")%> |
+
+    <%= link_to "Comments: #{post.comments.length}", post_path(post)%>
+  </p>
+  <hr />

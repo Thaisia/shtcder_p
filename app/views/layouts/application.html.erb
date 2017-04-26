@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shtcder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/styles/default.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Finger+Paint" rel="stylesheet">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.11.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-static-top">
+       <div class="container">
+         <div class="navbar-header">
+           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+             <span class="sr-only">Toggle navigation</span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
+           <div class="navbar-brand shtcder-brand">Shtcder!</div>
+         </div>
+         <div id="navbar" class="navbar-collapse collapse">
+           <ul class="nav navbar-nav">
+             <li><%= link_to 'New Shtcd', new_post_path %></li>
+             <li class="active"><%= link_to 'View All Shtcds', posts_path %></li>
+              <%= form_tag(posts_path, :class => "navbar-form navbar-left", :method => "get", id: "search-form") do %>
+                <%= text_field_tag :search, params[:search], :class => "form-control", placeholder: "Search" %>
+                <%= submit_tag "Search", :class => "btn btn-primary btn-sm" %>
+              <% end %>
+           </ul>
+           <ul class="nav navbar-nav navbar-right">
+             <li class="notice">
+               <%= notice %>
+             </li>
+             <li class="alert">
+               <%= alert %>
+             </li>
+             <% if user_signed_in? %>
+
+              <li>
+                 <div class="navbar-text">Hello, <%= link_to current_user.username, profile_path(current_user.id)%></div>
+              </li>
+              <li>
+                   <%= link_to 'Sign Out!', destroy_user_session_path, method: :delete %>
+              </li>
+              <% else %>
+               <li>
+                 <%= link_to 'Sign In!', new_user_session_path %>
+             </li>
+             <% end %>
+           </ul>
+         </div><!--/.nav-collapse -->
+       </div>
+     </nav>
+
+    <div class="container sht-container">
+      <%= yield %>
+    </div>
+  <script>
+    $(document).ready(function() {
+      $('pre code').each(function(i, block) {
+        hljs.highlightBlock(block);
+      });
+    });
+  </script>
+  <script>
+    var clipboard = new Clipboard('.btn-clipboard');
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+  </script>
+</body>
+</html>

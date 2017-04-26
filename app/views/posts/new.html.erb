@@ -1,0 +1,27 @@
+<div class="form-group">
+  <%= form_for :post, url: posts_path do |f| %>
+
+  <div class="sht-content">
+    <div class="sht-title">
+      <%= f.text_field :title, :class => "form-control", :placeholder => "title here"  %>
+    </div>
+    <div class="sht-text">
+      <%= f.text_area :text, :class => "form-control", :rows => "15", :placeholder => "code here" %>
+    </div>
+  </div>
+  <br>
+  <div class="sht-content-options form-inline">
+
+    <div class="sht-lang">
+      Language:  
+      <%= f.select(:lang, @languages)  %>
+    </div>
+    <div class="sht-publ checkbox">
+      <%= f.label :public%>
+      <%= f.check_box :public, :checked=>true %>
+    </div>
+    <div class="sht-btn">
+      <%= f.submit :class => "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+  <% end %>

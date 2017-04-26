@@ -1,0 +1,25 @@
+<h4>Name: <%= @profile.username %></h4>
+<p>
+  <i>registered in:
+  <%= @profile.created_at.strftime("%Y-%m-%d")%></i>
+</p>
+<b><%= @profile.username %> posts:</b>
+<p>
+  <% @posts.each do |c|%>
+  <p>
+    <b><%= c.title %></b> (<%= c.lang%>)
+    <% if c.user_id == current_user.id  %>
+      <%= link_to 'Edit', edit_post_path(c) %> |
+      <%= link_to 'Delete', post_path(c), method: :delete, data: { confirm: 'Are you sure?'} %>
+    <% end %>
+    <% if c.lang == 'None' %>
+      <pre><code class="nohighlight"><%= c.text %></code></pre>
+    <% elsif c.lang == 'Other'%>
+      <pre><code><%= c.text %></code></pre>
+    <%else%>
+      <pre><code class="<%= c.lang.downcase%>"><%= c.text %></code></pre>
+    <%end%>
+  </p>
+  <hr>
+  <% end%>
+</p>

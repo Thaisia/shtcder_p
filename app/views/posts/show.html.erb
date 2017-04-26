@@ -1,0 +1,57 @@
+<h3><%= @post.title %></h3>
+<p>
+  Author:
+  <% if @post.user_id == 0  %>
+    Anon |
+  <% else %>
+    <%= link_to @post.user.username, profile_path(@post.user_id)%> |
+  <% end %>
+  Language: <%= @post.lang %>
+</p>
+<p>
+  <% if @post.lang == 'None' %>
+    <pre><code class="nohighlight"><%= @post.text %></code></pre>
+  <% elsif @post.lang == 'Other'%>
+    <pre><code><%= @post.text %></code></pre>
+  <%else%>
+    <pre><code class="<%= @post.lang.downcase%>"><%= @post.text %></code></pre>
+  <%end%>
+</p>
+<p>
+  <% if @post.user_id == current_user.id  %>
+    <%= link_to 'Edit', edit_post_path(@post) %> |
+    <%= link_to 'Delete', post_path(@post), method: :delete, data: { confirm: 'Are you sure?'} %>
+  <% end %>
+</p>
+<hr>
+
+<p>
+  <b>Comments:</b>
+</p>
+
+<% @post.comments.each do |c|%>
+  <p>
+    <%= c.user.username %> said:
+  </p>
+  <p>
+    <i><%= c.text %></i>
+  </p>
+  <hr />
+<% end%>
+
+<% if user_signed_in? %>
+  <p>
+    <i>Send comment</i>
+  </p>
+
+  <%= form_for([@post, @post.comments.build]) do |f| %>
+    <p>
+      <%= f.text_area :text, :class => "form-control", :rows => "3"  %>
+    </p>
+    <p>
+      <%= f.submit :class => "btn btn-primary btn-sm"  %>
+    </p>
+  <%end%>
+<% else %>
+  <b><%= link_to "Sign in", user_session_path %> or <%= link_to "register", new_user_registration_path %> to post comments</b>
+<% end %>

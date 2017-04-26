@@ -1,0 +1,24 @@
+<div class="form-group">
+  <%= form_for :post, url: post_path(@post), method: :put do |f| %>
+
+    <p>
+      <%= f.label :title %>
+      <%= f.text_field :title, :class => "form-control" %>
+    </p>
+    <p>
+      <%= f.label :text%>
+      <%= f.text_area :text, :class => "form-control", :rows => "7" %>
+    </p>
+    <p>
+      <%= f.label 'Language'%>
+      <%= f.select :lang, @languages %>
+    </p>
+    <p>
+      <%= f.label :public%>
+      <%= f.check_box :public%>
+    </p>
+    <p>
+      <%= f.submit :class => "btn btn-primary" %>
+    </p>
+  <% end %>
+</div>
