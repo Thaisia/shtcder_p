@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   def post_owner
     @post = Post.find(params[:id])
     unless @post.user_id == current_user.id
-      flash[:notice] = 'Access denied as you are not owner of this Job'
+      flash[:notice] = 'Access denied as you are not owner of this post'
       redirect_to post_path
     end
   end
