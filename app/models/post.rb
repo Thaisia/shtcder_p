@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
   validates :title, presence: true
   validates :text, presence: true
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   belongs_to :user
 
   self.per_page = 10
