@@ -8,7 +8,7 @@
   <% @posts.each do |c|%>
   <p>
     <b><%= c.title %></b> (<%= c.lang%>)
-    <% if c.user_id == current_user.id  %>
+    <% if current_user != nil and c.user_id == current_user.id  %>
       <%= link_to 'Edit', edit_post_path(c) %> |
       <%= link_to 'Delete', post_path(c), method: :delete, data: { confirm: 'Are you sure?'} %>
     <% end %>
